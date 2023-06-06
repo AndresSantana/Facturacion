@@ -1,0 +1,953 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="facturacionModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cmunicipio">
+          <Key>
+            <PropertyRef Name="idcMunicipio" />
+          </Key>
+          <Property Name="idcMunicipio" Type="int" Nullable="false" />
+          <Property Name="iddEstado" Type="int" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Municipio" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CabeceraMunicipal" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="cstate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="cstate_invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ctype_invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="comercial_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="RFC" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="CP" Type="varchar" MaxLength="5" />
+          <Property Name="Street" Type="varchar" MaxLength="500" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+          <Property Name="idMunicipio" Type="int" Nullable="false" />
+          <Property Name="idUser" Type="int" />
+          <Property Name="create_date" Type="datetime" Precision="0" />
+          <Property Name="idState" Type="int" />
+          <Property Name="NoExt" Type="varchar" MaxLength="10" />
+          <Property Name="NoInt" Type="varchar" MaxLength="10" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="CodeTaxRegime" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="destado">
+          <Key>
+            <PropertyRef Name="iddEstado" />
+          </Key>
+          <Property Name="iddEstado" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pais" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Valor" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Activo" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RFCReceptor" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="Serie" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Folio" Type="int" Nullable="false" />
+          <Property Name="idUser" Type="int" />
+          <Property Name="idType" Type="int" />
+          <Property Name="date_create" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="idStateInvoice" Type="int" />
+          <Property Name="xml" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="claveProdServ" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="claveUnidad" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NoIdentificacion" Type="varchar" MaxLength="100" />
+          <Property Name="Unidad" Type="varchar" MaxLength="100" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="idUser" Type="int" />
+          <Property Name="date_create" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="idState" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product_tax">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idProduct" Type="int" />
+          <Property Name="idTax" Type="int" />
+        </EntityType>
+        <EntityType Name="tax">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_create" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="idState" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="type_ambit" Type="enum" Nullable="false" />
+          <Property Name="type" Type="enum" Nullable="false" />
+          <Property Name="tasa" Type="decimal" Precision="10" Scale="6" Nullable="false" />
+          <Property Name="claveImpuesto" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="tipo_factor" Type="enum" Nullable="false" />
+          <Property Name="idUser" Type="int" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="idState" Type="int" />
+          <Property Name="date_create" Type="datetime" Precision="0" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fiscal_name" Type="varchar" MaxLength="200" />
+          <Property Name="rfc" Type="varchar" MaxLength="13" />
+          <Property Name="CodeTaxRegime" Type="varchar" MaxLength="10" />
+          <Property Name="PrivateCode" Type="varchar" MaxLength="100" />
+          <Property Name="UserPacFC" Type="varchar" MaxLength="255" />
+          <Property Name="PassPacFC" Type="varchar" MaxLength="255" />
+          <Property Name="cp" Type="varchar" MaxLength="6" />
+        </EntityType>
+        <Association Name="cmunicipio_ibfk_1">
+          <End Role="destado" Type="Self.destado" Multiplicity="1" />
+          <End Role="cmunicipio" Type="Self.cmunicipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="destado">
+              <PropertyRef Name="iddEstado" />
+            </Principal>
+            <Dependent Role="cmunicipio">
+              <PropertyRef Name="iddEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_customer_cmunicipio">
+          <End Role="cmunicipio" Type="Self.cmunicipio" Multiplicity="1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmunicipio">
+              <PropertyRef Name="idcMunicipio" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="idMunicipio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_customer_destado">
+          <End Role="destado" Type="Self.destado" Multiplicity="1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="destado">
+              <PropertyRef Name="iddEstado" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="idEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_customer_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="idState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_customer_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_factura_type">
+          <End Role="ctype_invoice" Type="Self.ctype_invoice" Multiplicity="0..1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ctype_invoice">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_factura_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_product_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="idState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_product_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pt_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="product_tax" Type="Self.product_tax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product_tax">
+              <PropertyRef Name="idProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pt_tax">
+          <End Role="tax" Type="Self.tax" Multiplicity="0..1" />
+          <End Role="product_tax" Type="Self.product_tax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product_tax">
+              <PropertyRef Name="idTax" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tax_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="1" />
+          <End Role="tax" Type="Self.tax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tax">
+              <PropertyRef Name="idState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tax_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="tax" Type="Self.tax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tax">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_user_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="idState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="facturacionModelStoreContainer">
+          <EntitySet Name="cmunicipio" EntityType="Self.cmunicipio" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="cstate" EntityType="Self.cstate" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="cstate_invoice" EntityType="Self.cstate_invoice" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="ctype_invoice" EntityType="Self.ctype_invoice" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="destado" EntityType="Self.destado" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="invoice" EntityType="Self.invoice" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="product_tax" EntityType="Self.product_tax" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="tax" EntityType="Self.tax" Schema="facturacion" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="facturacion" store:Type="Tables" />
+          <AssociationSet Name="cmunicipio_ibfk_1" Association="Self.cmunicipio_ibfk_1">
+            <End Role="destado" EntitySet="destado" />
+            <End Role="cmunicipio" EntitySet="cmunicipio" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customer_cmunicipio" Association="Self.fk_customer_cmunicipio">
+            <End Role="cmunicipio" EntitySet="cmunicipio" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customer_destado" Association="Self.fk_customer_destado">
+            <End Role="destado" EntitySet="destado" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customer_state" Association="Self.fk_customer_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customer_user" Association="Self.fk_customer_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_factura_type" Association="Self.fk_factura_type">
+            <End Role="ctype_invoice" EntitySet="ctype_invoice" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_factura_user" Association="Self.fk_factura_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_product_state" Association="Self.fk_product_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_product_user" Association="Self.fk_product_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pt_product" Association="Self.fk_pt_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="product_tax" EntitySet="product_tax" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pt_tax" Association="Self.fk_pt_tax">
+            <End Role="tax" EntitySet="tax" />
+            <End Role="product_tax" EntitySet="product_tax" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tax_state" Association="Self.fk_tax_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="tax" EntitySet="tax" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tax_user" Association="Self.fk_tax_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="tax" EntitySet="tax" />
+          </AssociationSet>
+          <AssociationSet Name="fk_user_state" Association="Self.fk_user_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="facturacionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cstate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="product" Relationship="facturacionModel.fk_product_state" FromRole="cstate" ToRole="product" />
+          <NavigationProperty Name="tax" Relationship="facturacionModel.fk_tax_state" FromRole="cstate" ToRole="tax" />
+          <NavigationProperty Name="user" Relationship="facturacionModel.fk_user_state" FromRole="cstate" ToRole="user" />
+          <NavigationProperty Name="customer" Relationship="facturacionModel.fk_customer_state" FromRole="cstate" ToRole="customer" />
+        </EntityType>
+        <EntityContainer Name="facturacionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cstate" EntityType="Self.cstate" />
+          <EntitySet Name="cstate_invoice" EntityType="facturacionModel.cstate_invoice" />
+          <EntitySet Name="product_tax" EntityType="facturacionModel.product_tax" />
+          <EntitySet Name="cmunicipio" EntityType="facturacionModel.cmunicipio" />
+          <EntitySet Name="destado" EntityType="facturacionModel.destado" />
+          <AssociationSet Name="cmunicipio_ibfk_1" Association="facturacionModel.cmunicipio_ibfk_1">
+            <End Role="destado" EntitySet="destado" />
+            <End Role="cmunicipio" EntitySet="cmunicipio" />
+          </AssociationSet>
+          <EntitySet Name="product" EntityType="facturacionModel.product" />
+          <AssociationSet Name="fk_product_state" Association="facturacionModel.fk_product_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pt_product" Association="facturacionModel.fk_pt_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="product_tax" EntitySet="product_tax" />
+          </AssociationSet>
+          <EntitySet Name="invoice" EntityType="facturacionModel.invoice" />
+          <EntitySet Name="tax" EntityType="facturacionModel.tax" />
+          <AssociationSet Name="fk_tax_state" Association="facturacionModel.fk_tax_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="tax" EntitySet="tax" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pt_tax" Association="facturacionModel.fk_pt_tax">
+            <End Role="tax" EntitySet="tax" />
+            <End Role="product_tax" EntitySet="product_tax" />
+          </AssociationSet>
+          <EntitySet Name="ctype_invoice" EntityType="facturacionModel.ctype_invoice" />
+          <AssociationSet Name="fk_factura_type" Association="facturacionModel.fk_factura_type">
+            <End Role="ctype_invoice" EntitySet="ctype_invoice" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <EntitySet Name="user" EntityType="facturacionModel.user" />
+          <AssociationSet Name="fk_user_state" Association="facturacionModel.fk_user_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="fk_factura_user" Association="facturacionModel.fk_factura_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_product_user" Association="facturacionModel.fk_product_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tax_user" Association="facturacionModel.fk_tax_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="tax" EntitySet="tax" />
+          </AssociationSet>
+          <EntitySet Name="customer" EntityType="facturacionModel.customer" />
+          <AssociationSet Name="fk_customer_cmunicipio" Association="facturacionModel.fk_customer_cmunicipio">
+            <End Role="cmunicipio" EntitySet="cmunicipio" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customer_state" Association="facturacionModel.fk_customer_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customer_destado" Association="facturacionModel.fk_customer_destado">
+            <End Role="destado" EntitySet="destado" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_customer_user" Association="facturacionModel.fk_customer_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="cstate_invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="product_tax">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idProduct" Type="Int32" />
+          <Property Name="idTax" Type="Int32" />
+          <NavigationProperty Name="product" Relationship="facturacionModel.fk_pt_product" FromRole="product_tax" ToRole="product" />
+          <NavigationProperty Name="tax" Relationship="facturacionModel.fk_pt_tax" FromRole="product_tax" ToRole="tax" />
+        </EntityType>
+        <EntityType Name="cmunicipio">
+          <Key>
+            <PropertyRef Name="idcMunicipio" />
+          </Key>
+          <Property Name="idcMunicipio" Type="Int32" Nullable="false" />
+          <Property Name="iddEstado" Type="Int32" Nullable="false" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Municipio" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CabeceraMunicipal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="destado" Relationship="facturacionModel.cmunicipio_ibfk_1" FromRole="cmunicipio" ToRole="destado" />
+          <NavigationProperty Name="customer" Relationship="facturacionModel.fk_customer_cmunicipio" FromRole="cmunicipio" ToRole="customer" />
+        </EntityType>
+        <EntityType Name="destado">
+          <Key>
+            <PropertyRef Name="iddEstado" />
+          </Key>
+          <Property Name="iddEstado" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pais" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Valor" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="cmunicipio" Relationship="facturacionModel.cmunicipio_ibfk_1" FromRole="destado" ToRole="cmunicipio" />
+          <NavigationProperty Name="customer" Relationship="facturacionModel.fk_customer_destado" FromRole="destado" ToRole="customer" />
+        </EntityType>
+        <Association Name="cmunicipio_ibfk_1">
+          <End Type="facturacionModel.destado" Role="destado" Multiplicity="1" />
+          <End Type="facturacionModel.cmunicipio" Role="cmunicipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="destado">
+              <PropertyRef Name="iddEstado" />
+            </Principal>
+            <Dependent Role="cmunicipio">
+              <PropertyRef Name="iddEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="claveProdServ" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="claveUnidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NoIdentificacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Unidad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" />
+          <Property Name="idUser" Type="Int32" />
+          <Property Name="date_create" Type="DateTime" Nullable="false" />
+          <Property Name="idState" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cstate" Relationship="facturacionModel.fk_product_state" FromRole="product" ToRole="cstate" />
+          <NavigationProperty Name="product_tax" Relationship="facturacionModel.fk_pt_product" FromRole="product" ToRole="product_tax" />
+          <NavigationProperty Name="user" Relationship="facturacionModel.fk_product_user" FromRole="product" ToRole="user" />
+        </EntityType>
+        <Association Name="fk_product_state">
+          <End Type="facturacionModel.cstate" Role="cstate" Multiplicity="1" />
+          <End Type="facturacionModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="idState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pt_product">
+          <End Type="facturacionModel.product" Role="product" Multiplicity="0..1" />
+          <End Type="facturacionModel.product_tax" Role="product_tax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product_tax">
+              <PropertyRef Name="idProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RFCReceptor" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="Decimal" Nullable="false" />
+          <Property Name="Serie" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Folio" Type="Int32" Nullable="false" />
+          <Property Name="idUser" Type="Int32" />
+          <Property Name="idType" Type="Int32" />
+          <Property Name="date_create" Type="DateTime" Nullable="false" />
+          <Property Name="idStateInvoice" Type="Int32" />
+          <Property Name="xml" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ctype_invoice" Relationship="facturacionModel.fk_factura_type" FromRole="invoice" ToRole="ctype_invoice" />
+          <NavigationProperty Name="user" Relationship="facturacionModel.fk_factura_user" FromRole="invoice" ToRole="user" />
+        </EntityType>
+        <EntityType Name="tax">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_create" Type="DateTime" Nullable="false" />
+          <Property Name="idState" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="type_ambit" Type="String" Nullable="false" MaxLength="65532" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="65532" FixedLength="false" Unicode="false" />
+          <Property Name="tasa" Type="Decimal" Nullable="false" />
+          <Property Name="claveImpuesto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_factor" Type="String" Nullable="false" MaxLength="65532" FixedLength="false" Unicode="false" />
+          <Property Name="idUser" Type="Int32" />
+          <NavigationProperty Name="cstate" Relationship="facturacionModel.fk_tax_state" FromRole="tax" ToRole="cstate" />
+          <NavigationProperty Name="product_tax" Relationship="facturacionModel.fk_pt_tax" FromRole="tax" ToRole="product_tax" />
+          <NavigationProperty Name="user" Relationship="facturacionModel.fk_tax_user" FromRole="tax" ToRole="user" />
+        </EntityType>
+        <Association Name="fk_tax_state">
+          <End Type="facturacionModel.cstate" Role="cstate" Multiplicity="1" />
+          <End Type="facturacionModel.tax" Role="tax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tax">
+              <PropertyRef Name="idState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pt_tax">
+          <End Type="facturacionModel.tax" Role="tax" Multiplicity="0..1" />
+          <End Type="facturacionModel.product_tax" Role="product_tax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tax">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product_tax">
+              <PropertyRef Name="idTax" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ctype_invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="invoice" Relationship="facturacionModel.fk_factura_type" FromRole="ctype_invoice" ToRole="invoice" />
+        </EntityType>
+        <Association Name="fk_factura_type">
+          <End Type="facturacionModel.ctype_invoice" Role="ctype_invoice" Multiplicity="0..1" />
+          <End Type="facturacionModel.invoice" Role="invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ctype_invoice">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="idState" Type="Int32" />
+          <Property Name="date_create" Type="DateTime" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fiscal_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="rfc" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="CodeTaxRegime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PrivateCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserPacFC" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PassPacFC" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="cp" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cstate" Relationship="facturacionModel.fk_user_state" FromRole="user" ToRole="cstate" />
+          <NavigationProperty Name="invoice" Relationship="facturacionModel.fk_factura_user" FromRole="user" ToRole="invoice" />
+          <NavigationProperty Name="product" Relationship="facturacionModel.fk_product_user" FromRole="user" ToRole="product" />
+          <NavigationProperty Name="tax" Relationship="facturacionModel.fk_tax_user" FromRole="user" ToRole="tax" />
+          <NavigationProperty Name="customer" Relationship="facturacionModel.fk_customer_user" FromRole="user" ToRole="customer" />
+        </EntityType>
+        <Association Name="fk_user_state">
+          <End Type="facturacionModel.cstate" Role="cstate" Multiplicity="0..1" />
+          <End Type="facturacionModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="idState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_factura_user">
+          <End Type="facturacionModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="facturacionModel.invoice" Role="invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_product_user">
+          <End Type="facturacionModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="facturacionModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tax_user">
+          <End Type="facturacionModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="facturacionModel.tax" Role="tax" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tax">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="comercial_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RFC" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="CP" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <Property Name="idMunicipio" Type="Int32" Nullable="false" />
+          <Property Name="idUser" Type="Int32" />
+          <Property Name="create_date" Type="DateTime" />
+          <Property Name="idState" Type="Int32" />
+          <Property Name="NoExt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NoInt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CodeTaxRegime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cmunicipio" Relationship="facturacionModel.fk_customer_cmunicipio" FromRole="customer" ToRole="cmunicipio" />
+          <NavigationProperty Name="cstate" Relationship="facturacionModel.fk_customer_state" FromRole="customer" ToRole="cstate" />
+          <NavigationProperty Name="destado" Relationship="facturacionModel.fk_customer_destado" FromRole="customer" ToRole="destado" />
+          <NavigationProperty Name="user" Relationship="facturacionModel.fk_customer_user" FromRole="customer" ToRole="user" />
+        </EntityType>
+        <Association Name="fk_customer_cmunicipio">
+          <End Type="facturacionModel.cmunicipio" Role="cmunicipio" Multiplicity="1" />
+          <End Type="facturacionModel.customer" Role="customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cmunicipio">
+              <PropertyRef Name="idcMunicipio" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="idMunicipio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_customer_state">
+          <End Type="facturacionModel.cstate" Role="cstate" Multiplicity="0..1" />
+          <End Type="facturacionModel.customer" Role="customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="idState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_customer_destado">
+          <End Type="facturacionModel.destado" Role="destado" Multiplicity="1" />
+          <End Type="facturacionModel.customer" Role="customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="destado">
+              <PropertyRef Name="iddEstado" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="idEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_customer_user">
+          <End Type="facturacionModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="facturacionModel.customer" Role="customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="facturacionModelStoreContainer" CdmEntityContainer="facturacionEntities">
+          <EntitySetMapping Name="cstate">
+            <EntityTypeMapping TypeName="facturacionModel.cstate">
+              <MappingFragment StoreEntitySet="cstate">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cstate_invoice">
+            <EntityTypeMapping TypeName="facturacionModel.cstate_invoice">
+              <MappingFragment StoreEntitySet="cstate_invoice">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_tax">
+            <EntityTypeMapping TypeName="facturacionModel.product_tax">
+              <MappingFragment StoreEntitySet="product_tax">
+                <ScalarProperty Name="idTax" ColumnName="idTax" />
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cmunicipio">
+            <EntityTypeMapping TypeName="facturacionModel.cmunicipio">
+              <MappingFragment StoreEntitySet="cmunicipio">
+                <ScalarProperty Name="CabeceraMunicipal" ColumnName="CabeceraMunicipal" />
+                <ScalarProperty Name="Municipio" ColumnName="Municipio" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="iddEstado" ColumnName="iddEstado" />
+                <ScalarProperty Name="idcMunicipio" ColumnName="idcMunicipio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="destado">
+            <EntityTypeMapping TypeName="facturacionModel.destado">
+              <MappingFragment StoreEntitySet="destado">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="iddEstado" ColumnName="iddEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="facturacionModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="idState" ColumnName="idState" />
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="NoIdentificacion" ColumnName="NoIdentificacion" />
+                <ScalarProperty Name="claveUnidad" ColumnName="claveUnidad" />
+                <ScalarProperty Name="claveProdServ" ColumnName="claveProdServ" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoice">
+            <EntityTypeMapping TypeName="facturacionModel.invoice">
+              <MappingFragment StoreEntitySet="invoice">
+                <ScalarProperty Name="xml" ColumnName="xml" />
+                <ScalarProperty Name="idStateInvoice" ColumnName="idStateInvoice" />
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="Folio" ColumnName="Folio" />
+                <ScalarProperty Name="Serie" ColumnName="Serie" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="RFCReceptor" ColumnName="RFCReceptor" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tax">
+            <EntityTypeMapping TypeName="facturacionModel.tax">
+              <MappingFragment StoreEntitySet="tax">
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="tipo_factor" ColumnName="tipo_factor" />
+                <ScalarProperty Name="claveImpuesto" ColumnName="claveImpuesto" />
+                <ScalarProperty Name="tasa" ColumnName="tasa" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="type_ambit" ColumnName="type_ambit" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idState" ColumnName="idState" />
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ctype_invoice">
+            <EntityTypeMapping TypeName="facturacionModel.ctype_invoice">
+              <MappingFragment StoreEntitySet="ctype_invoice">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="facturacionModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="cp" ColumnName="cp" />
+                <ScalarProperty Name="PassPacFC" ColumnName="PassPacFC" />
+                <ScalarProperty Name="UserPacFC" ColumnName="UserPacFC" />
+                <ScalarProperty Name="PrivateCode" ColumnName="PrivateCode" />
+                <ScalarProperty Name="CodeTaxRegime" ColumnName="CodeTaxRegime" />
+                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="fiscal_name" ColumnName="fiscal_name" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="idState" ColumnName="idState" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer">
+            <EntityTypeMapping TypeName="facturacionModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="CodeTaxRegime" ColumnName="CodeTaxRegime" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="NoInt" ColumnName="NoInt" />
+                <ScalarProperty Name="NoExt" ColumnName="NoExt" />
+                <ScalarProperty Name="idState" ColumnName="idState" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="idMunicipio" ColumnName="idMunicipio" />
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="CP" ColumnName="CP" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="comercial_name" ColumnName="comercial_name" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

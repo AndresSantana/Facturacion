@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="11c5620befb444b6b0bfdd818746560b" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="facturacionModel.cstate" Width="1.5" PointX="1.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="facturacionModel.cstate_invoice" Width="1.5" PointX="7.375" PointY="10.75" />
+        <EntityTypeShape EntityType="facturacionModel.product_tax" Width="1.5" PointX="10.5" PointY="6.625" />
+        <EntityTypeShape EntityType="facturacionModel.cmunicipio" Width="1.5" PointX="9.625" PointY="0.875" />
+        <EntityTypeShape EntityType="facturacionModel.destado" Width="1.5" PointX="7.375" PointY="0.875" />
+        <AssociationConnector Association="facturacionModel.cmunicipio_ibfk_1" />
+        <EntityTypeShape EntityType="facturacionModel.product" Width="1.5" PointX="4.875" PointY="5.375" />
+        <AssociationConnector Association="facturacionModel.fk_product_state" />
+        <AssociationConnector Association="facturacionModel.fk_pt_product" />
+        <EntityTypeShape EntityType="facturacionModel.invoice" Width="1.5" PointX="9.75" PointY="10.75" />
+        <EntityTypeShape EntityType="facturacionModel.tax" Width="1.5" PointX="7.75" PointY="4.125" />
+        <AssociationConnector Association="facturacionModel.fk_tax_state" />
+        <AssociationConnector Association="facturacionModel.fk_pt_tax" />
+        <EntityTypeShape EntityType="facturacionModel.ctype_invoice" Width="1.5" PointX="0.75" PointY="4.875" />
+        <AssociationConnector Association="facturacionModel.fk_factura_type" />
+        <EntityTypeShape EntityType="facturacionModel.user" Width="1.5" PointX="4" PointY="10.625" />
+        <AssociationConnector Association="facturacionModel.fk_user_state" />
+        <AssociationConnector Association="facturacionModel.fk_factura_user" />
+        <AssociationConnector Association="facturacionModel.fk_product_user" />
+        <AssociationConnector Association="facturacionModel.fk_tax_user" />
+        <EntityTypeShape EntityType="facturacionModel.customer" Width="1.5" PointX="12.875" PointY="4.625" />
+        <AssociationConnector Association="facturacionModel.fk_customer_cmunicipio" />
+        <AssociationConnector Association="facturacionModel.fk_customer_state" />
+        <AssociationConnector Association="facturacionModel.fk_customer_destado" />
+        <AssociationConnector Association="facturacionModel.fk_customer_user" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
